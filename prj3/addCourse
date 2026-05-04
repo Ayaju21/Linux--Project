@@ -1,0 +1,72 @@
+echo "Enter a course ID ( 8 or 7 digits ): or done to go back"
+read id
+if [ "$id" == "done" ]
+then
+	mycourses
+	exit 0
+else
+until [[ "$id" = [a-z][a-z][a-z][a-z][0-9][0-9][0-9] ]] || [[ "$id" = [a-z][a-z][a-z][a-z][0-9][0-9][0-9][0-9] ]]
+	do
+		echo "Invalid please enter 8 or 7 digits. Usage: abcd123 or abcd1234"
+		read id
+done
+	idtest=$(grep $id courses | cut -d: -f1)
+while [[ $id == $idtest ]]
+	do
+		echo The ID is already exist !!
+		echo enter another Id or "done" to go back
+		read id
+	idtest=$(grep $id courses | cut -d: -f1)
+	if [ "$id" == "done" ]
+	then
+		mycourses
+	fi
+done
+fi
+	echo "Enter First name:"
+read firstname
+while [[ "$firstname" =~ [0-9] ]] || [[ "$firstname" =~ [" "]  ]] || [[ -z "$firstname" ]]
+do
+	echo "Invalid name please try again"
+	echo "Enter First name:"
+	read firstname
+done
+	echo "Enter Last name:"
+	read lastname
+while [[ "$lastname" =~ [0-9] ]] || [[ "$lastname" =~ [" "] ]] || [[ -z "$lastname" ]]
+do
+	echo "Invalid name please try again"
+	echo "Enter Last name:"
+	read lastname
+done
+	fullname=$firstname" "$lastname
+
+	echo "Enter ISBN Number : x-xxx-xxxx"
+	read isbn
+while [[ "$isbn" != [0-9][-][0-9][0-9][0-9][-][0-9][0-9][0-9][0-9] ]]
+	do
+	echo "Invalid ISBN Number. Usage: x-xxx-xxxx"
+	read isbn
+done
+
+	echo "Enter Instructer First name:"
+read firstnameIns
+while [[ "$firstnameIns" =~ [0-9] ]] || [[ "$firstnameIns" =~ [" "]  ]] || [[ -z "$firstnameIns" ]]
+do
+	echo "Invalid name please try again"
+	echo "Enter First name:"
+	read firstnameIns
+done
+	echo "Enter Last name:"
+	read lastnameIns
+while [[ "$lastnameIns" =~ [0-9] ]] || [[ "$lastnameIns" =~ [" "] ]] || [[ -z "$lastnameIns" ]]
+do
+	echo "Invalid name please try again"
+	echo "Enter Last name:"
+	read lastnameIns
+done
+	fullnameIns=$firstnameIns"_"$lastnameIns
+
+
+echo "$id:$fullname:$isbn:$fullnameIns" >> courses
+echo "Course added successfully"

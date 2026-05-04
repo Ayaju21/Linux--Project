@@ -1,0 +1,28 @@
+echo "Please select an operation (1-4):"
+echo 1- Add courses
+echo 2- Change courses
+echo 3- Search courses
+echo 4- Exit
+
+read choice
+while [ $choice != 4 ]
+do
+ case $choice in
+
+        1) addCourse
+                ;;
+        2) deleteCourse
+                ;;
+        3) searchCourse
+                ;;
+        4) ExitScript
+                ;;
+                esac
+echo "Please select an operation (1-4):"
+echo 1- Add courses
+echo 2- Change courses
+echo 3- Search courses
+echo 4- Exit
+read choice
+done
+echo Have a Good Day !

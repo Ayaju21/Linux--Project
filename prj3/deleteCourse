@@ -1,0 +1,70 @@
+echo "Select an operation"
+echo "1-Delete a course"
+echo "2-Delete all courses"
+echo "3-Change course information"
+echo "4-Back to menu"
+read x
+case $x in
+	1) echo "Enter Course ID to delete or done to back"
+        read id
+        if [ "$id" == "done" ]
+        then
+        mycourses
+        else
+        until [[ "$id" != [a-z][a-z][a-z][a-z][0-9][0-9][0-9] ]] || [[ "$id" != [a-z][a-z][a-z][a-z][0-9][0-9][0-9][0-9] ]]
+        do
+        echo "No such course please try again"
+        read id
+        done
+        idtest=$(grep $id courses | cut -d: -f1)
+        while [[ $id != $idtest ]]
+        do
+        echo THIS ID NOT EXIST!!
+        read id
+        idtest=$(grep $id courses | cut -d: -f1)
+        done
+        fi
+        echo "$(grep -v "$id" courses)" > courses
+        echo "Course Deleted Successfully"
+        ;;
+	2)echo "" > courses
+	 ;;
+	3)echo "choose what do you want to change:"
+	echo "1-modify ISBN Number"
+	echo "2-modify Instructer last name"
+	read choice
+	
+	case $choice in
+	1) echo "Enter Course ID to modify or done to back"
+        read id2
+        if [ "$id2" == "done" ]
+        then
+        mycourses
+        else
+        until [[ "$id2" != [a-z][a-z][a-z][a-z][0-9][0-9][0-9] ]] || [[ "$id2" != [a-z][a-z][a-z][a-z][0-9][0-9][0-9][0-9] ]]
+        do
+        echo "No such course please try again"
+        read id2
+        done
+        idtest2=$(grep $id2 courses | cut -d: -f1)
+        while [[ $id2 != $idtest2 ]]
+        do
+        echo THIS ID NOT EXIST!!
+        read id2
+        idtest=$(grep $id2 courses | cut -d: -f1)
+        done
+        fi
+        
+	oldIsbn=$(grep $id2 courses | cut -d: -f3 )
+
+        echo "Enter the New ISBN Number: x-xxx-xxxx "
+        read newIsbn
+	
+	sed -i "s/$oldIsbn/$newIsbn/" courses
+	
+	;;
+	esac
+	;;
+        4)exit
+        deleteCo
+        esac

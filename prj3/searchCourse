@@ -1,0 +1,50 @@
+echo "Select an operation:"
+echo "1-Search course by ID"
+echo "2-Search course by Instructer Name"
+echo "3-Back to menu"
+read n
+	case $n in
+		1) echo "Enter the ID to search:"
+		read id
+        	until [[ "$id" != [a-z][a-z][a-z][a-z][0-9][0-9][0-9] ]] || [[ "$id" != [a-z][a-z][a-z][a-z][0-9][0-9][0-9][0-9] ]]
+			do
+				echo "No such Course try again!"
+				read id
+		done
+			idtest=$(grep $id courses | cut -d: -f1)
+        	while [[ $id != $idtest ]]
+        	do
+			echo THIS ID NOT EXIST!!
+			read id
+			idtest=$(grep $id courses | cut -d: -f1)
+		done
+		
+		echo "ID: "$(grep "$id" courses | cut -d: -f1)""
+		echo "Full Name: "$(grep "$id" courses | cut -d: -f2)""
+		echo "ISBN: "$(grep "$id" courses | cut -d: -f3)""
+		echo "Instructer Name: "$(grep "$id" courses | cut -d: -f4)""
+		;;
+
+		2) echo "Select an operation:"
+		echo "1-Search by first name"
+		echo "2-Search by last name"
+		read n2
+			case $n2 in
+				1) echo please enter first name of the instructer
+				read firstName
+				insName=$(grep $firstName courses | sort -k1)
+				echo $insName
+				;;
+				2) echo please enter last name of the instructer
+				read lastName
+				insName1=$(grep $lastName courses | sort -k1)
+				echo $insName1
+				;;
+			esac
+				;;
+		3) exit
+		;;
+		
+		*) echo "invalid input"
+		searchCo
+		esac
